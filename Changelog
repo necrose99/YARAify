@@ -1,0 +1,23 @@
+Changelog
+​All notable changes to this project will be documented in this file.
+​[1.0.0] - 2026-04-01
+​Added
+​Modern Python Packaging: Added pyproject.toml to support setuptools and PEP 621 standards.
+​Entry Points: Created CLI commands for all standalone scripts, allowing them to be run globally after installation:
+​yaraify-submit
+​yaraify-lookup
+​yaraify-rule
+​yaraify-task
+​yaraify-list
+​yaraify-rescan
+​Package Initialization: Added yaraify/__init__.py to allow the directory to be treated as a Python module.
+​Automation Support: Enabled "pip install" functionality, making it easier to integrate YARAify into SIEM platforms (e.g., Wazuh), SOAR workflows, and IR playbooks.
+​Changed
+​Directory Structure: Moved standalone scripts into the yaraify/ package directory to support standard Python import conventions.
+​Improved Execution: Standardized the way scripts handle system arguments via the new entry point pointers.
+​Fixed
+​Dependency Management: Centralized requirements (like requests) into the build configuration to ensure a consistent environment across different systems.
+​Why this matters for the PR:
+​Clarity: It shows you aren't just "messing with files"—you are adding versioning.
+​Professionalism: It signals to Abuse.ch that this is a stable, production-ready update.
+​Traceability: If someone's automation breaks because they were hard-coding a path like /usr/bin/yaraify_submit.py, this log explains that the new standard is yaraify-submit.
