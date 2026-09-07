@@ -1,7 +1,3 @@
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "yaraify"
 version = "1.0.0"
@@ -9,25 +5,26 @@ description = "CLI and SDK pointers for Abuse.ch YARAify scripts"
 readme = "README.md"
 requires-python = ">=3.8"
 authors = [{name = "Abuse.ch", email = "info@abuse.ch"}]
-license = {text = "MIT"}
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Topic :: Security",
-]
-dependencies = [
-    "requests",
+[build-system]
+requires = ["hatchling", "hatch-cython", "cython"]
+build-backend = "hatchling.build"
+
+# Declare the hatch-cython plugin build hook
+[tool.hatch.build.targets.wheel.hooks.cython]
+dependencies = ["hatch-cython"]
+
+# Configure Cython compilation directives
+[tool.hatch.build.targets.wheel.hooks.cython.options]
+directive = { language_level = "3", annotate = false }
+compile_args = [
+    "-O3",  # Maximum C optimization level
 ]
 
-[project.urls]
-"Homepage" = "https://github.com/abusech/YARAify"
-
-[project.scripts]
-yaraify-submit = "yaraify:submit"
-yaraify-lookup = "yaraify:lookup_hash"
-yaraify-rule   = "yaraify:lookup_rule"
-yaraify-task   = "yaraify:check_task"
-yaraify-list   = "yaraify:list_tasks"
-yaraify-rescan = "yaraify:rescan"
-yaraify-upload = "yaraify:upload_rule"
+# Define which files/filesets to include or compile
+[tool.hatch.build.targets.wheel.hooks.cython.options.files]
+includes = [
+    "*.py",  # Compiles all Python scripts into native binaries
+]
+exclude = [
+    "tests/*",
+]
